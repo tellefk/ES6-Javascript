@@ -11,7 +11,6 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
   openingHours: {
     thu: {
       open: 12,
@@ -27,3 +26,34 @@ const restaurant = {
     },
   },
 };
+
+
+// spread ... gjør om til liste på høyre siden og pakker ned på venstre siden, samme som *args på lister og **kvargs på objecter
+
+const [val1,val2,val3]=restaurant.mainMenu
+
+const [val4,...rest]=restaurant.mainMenu
+
+console.log(...rest)
+
+console.log(val2)
+
+
+
+
+const x={...restaurant}
+const [X, , B]=restaurant.mainMenu
+
+console.log(x)
+
+// const [...newList]=x
+
+const {name:names,location:test}=restaurant
+console.log(names)
+
+
+// const func=(...numbers)=>{
+//  [for(let i=0;i<numbers.length;i++) sum(numbers[i])]
+// }
+
+console.log(func(1,2,3,4))
