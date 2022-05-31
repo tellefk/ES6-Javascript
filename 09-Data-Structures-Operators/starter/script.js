@@ -85,6 +85,17 @@ const allPlayers=[...Team1,...Team2]
 console.log(allPlayers)
 
 
+const playersFinal=[...Team1,"Thiago","Coutinho","Perics"]
+
+const {team1:team1,x:draw,team2:team2}=game.odds
+console.log(team1,draw,team2)
+
+
+const printGoals=(...numbers)=>{
+  console.log(numbers)
+}
+
+printGoals()
 
 console.log(gk,fieldPlayers)
 
