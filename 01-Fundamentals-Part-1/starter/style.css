@@ -1,0 +1,51 @@
+
+* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+body {
+    padding: 5;
+    margin: 20px;
+    background-color:grey;
+}
+
+h1 {
+    font-size:100px;
+}
+
+.first {
+    color:red
+}
+
+.map {
+    /* background-color:green; */
+    margin:100px
+}
+
+#form {
+    background-color:gold;
+    text-align:center;
+    width: 500px;
+    padding:50px;
+    margin-top:50px;
+}
+
+
+/* .knapper {
+    font-size: 16px;
+    color:black;
+
+} */
+
+input,button {
+    padding: 16px;
+    font-size: 16px;
+
+}
+#form h2 {
+    font-size:19px;
+}
+.bilde{
+    width: 1000px;
+}
