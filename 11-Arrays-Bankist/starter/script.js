@@ -73,12 +73,9 @@ const currencies = new Map([
 
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// opacity=0 inn the ccs file makes the page blank
 containerApp.style.opacity=100
-
-
-
-const test=account2.movements
-
 
 const displayMoments=function(movements){
   containerMovements.innerHTML=""
@@ -93,7 +90,134 @@ const displayMoments=function(movements){
     containerMovements.insertAdjacentHTML("afterbegin",html)
   })
 }
+
+const movementsDescriptions=movements.map((mov,i)=>{
+  return `Movements ${i+1}: You ${mov>0 ? "deposited ": "withdrew "}${Math.abs(mov)} `
+})
 /////////////////////////////////////////////////
 
-console.log(containerMovements.innerHTML)
+
 displayMoments(account1.movements)
+
+
+const createUsernamesList=function(accArray){
+  accArray.forEach(acc=>{
+    acc.username=((acc.owner.trim().toLowerCase().split(" ").map(name=>name[0])).join(""))
+  })
+}
+createUsernamesList(accounts)
+// createUsernames(account1)
+
+const getBalance=function(movements){
+  labelBalance.textContent= movements.reduce(function(acc,cur){
+    return acc+cur
+  },0)
+}
+
+
+getBalance(account1.movements)
+
+// combinding all the filter 
+const eurToUsd=1.1
+const totalDepositUsd=movements
+.filter(mov=>mov>0)
+.map(mov=>mov* eurToUsd)
+.reduce((arr,cur)=>arr+cur)
+console.log(totalDepositUsd)
+
+
+
+
+
+
+const getMax=function(movements){
+  let max=movements[0]
+  for (const value of movements) if (value>=max) max=value
+  return max
+}
+
+// reduce fungerer slik: Første settes arr til movements[0]. Deretter loppes current_value (cur) hver verdi. arr settes da lik cur der arr er større enn cur
+const getMaxreduce=movements.reduce((arr,cur)=>{
+  console.log(arr,cur)
+  if (arr>=cur) return arr
+  else return cur
+},movements[0])
+
+console.log(getMax(account1.movements),getMaxreduce)
+
+
+
+
+
+
+
+
+
+// #challeng
+const dogsJulia=[3, 5, 2, 12, 7]
+const dogsKate=[4, 1, 15, 8, 3]
+
+ const removeCats=(array)=> {
+  return array.slice(1,array.length-2)
+}
+
+function checkAdultOrPuppy(dog) {
+  console.log(dog>=3 ? `Dog nr ${i} is adult`:`Dog nr ${i} is a puppy`)
+}
+
+function checkDogsSingel(array,removecat=true) {
+  const copy_array=removecat ? [...removeCats(array)] : [...array]
+  copy_array.forEach((dog,i)=>{console.log(dog>=3 ? `Dog nr ${i+1} is adult`:`Dog nr ${i+1} is a puppy`)})
+  return copy_array
+}
+function checkDogs(array1,array2) {
+  const [JuliaDogsNew,kateDogsNew]=[checkDogsSingel(array1,true),checkDogsSingel(array2,false)]
+  const results=[...JuliaDogsNew,...kateDogsNew]
+  results.forEach((dog,i)=>{console.log(dog>=3 ? `Dog nr ${i+1} is still adult`:`Dog nr ${i+1} is still a puppy`)})
+}
+
+// const results=checkDogs(dogsKate,dogsJulia)
+// console.log(results)
+
+// function checkDogs(array1,array2) {
+//   const [copy_array1,copy_array2]=[removeCats(array1),array2]
+//   copy_array1.forEach((dog,i)=>{console.log(dog>=3 ? `Dog nr ${i+1} is adult`:`Dog nr ${i+1} is a puppy`)})
+//   copy_array2.forEach((dog,i)=>{console.log(dog>=3 ? `Dog nr ${i+1} is adult`:`Dog nr ${i+1} is a puppy`)})
+// }
+
+
+
+// --MAP-- FILTER--REDUCE-- 
+
+// Alle metodene er callback functions med input som en function (variabel, indeks, array)
+
+const mapDogs=dogsKate.map((mov,indeks)=>{
+  return mov*2
+})
+
+const freshMap=dogsKate.map(mov=>mov*2)
+
+
+// FILTER // elemetens som pass test kommer i ny array.  condition is true legges til arary 
+
+
+const filterDogs=dogsKate.filter(dog=>dog>=3)
+const withdrews=movements.filter(mov=>mov<0)
+console.log(filterDogs,withdrews)
+// console.log(filterDogs)
+
+// REDUCE Sum av verdiene. 
+
+const sumMov=movements.reduce((acc,cur,i,arr)=>{
+  // console.log(acc,cur)
+  return acc + cur
+},0)
+
+
+// const Sum=sumMov
+// console.log(Sum)
+
+
+
+
+
