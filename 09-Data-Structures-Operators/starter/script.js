@@ -65,6 +65,9 @@ const game = {
   score: '4:0',
   scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
   date: 'Nov 9th, 2037',
+  test(){
+    
+  },
   odds: {
     team1: 1.33,
     x: 3.25,
@@ -73,6 +76,8 @@ const game = {
 };
 
 
+
+console.log(game.test())
 
 
 const [Team1,Team2]=game.players
@@ -98,4 +103,43 @@ const printGoals=(...numbers)=>{
 printGoals()
 
 console.log(gk,fieldPlayers)
+
+const soccer={
+  team:Array=[],
+  scored:Number=null,
+  odds:Number=null,
+  getodds(){
+    if (this?.odds != null){
+      for (const x of Object.keys(this.odds)){
+        console.log(this.odds[x])
+      } }
+    // this.test=this?.test || this?.odds || for (const keys of Object.values(this.odds)) { keys.length*10}
+  }
+}
+const X=function(){
+  return "bro"
+}
+const x=()=>{
+  return "bro"
+}
+
+console.log(x())
+
+soccer.team.push(...allPlayers)
+soccer.odds=game.odds
+
+soccer.getodds()
+console.log(soccer.test)
+
+console.log(soccer.team)
+console.log(game.odds)
+
+// || && or ??( nullish undefined variables etc good when test could be a number of 0. )
+soccer.test=soccer?.test ?? 0 
+// if value on right is false/undefined etc then go to next
+console.log(soccer?.test || "Test variable is not yet set")
+// if value on right is false then go to next
+console.log(soccer?.test ?? "Test variable is not yet set")
+// if value on right is true then go to next
+console.log(soccer?.test && "Test variable is not yet set")
 
