@@ -96,16 +96,11 @@ const movementsDescriptions=movements.map((mov,i)=>{
 })
 /////////////////////////////////////////////////
 
-
-displayMoments(account1.movements)
-
-
 const createUsernamesList=function(accArray){
   accArray.forEach(acc=>{
     acc.username=((acc.owner.trim().toLowerCase().split(" ").map(name=>name[0])).join(""))
   })
 }
-createUsernamesList(accounts)
 // createUsernames(account1)
 
 const getBalance=function(movements){
@@ -114,8 +109,138 @@ const getBalance=function(movements){
   },0)
 }
 
+const displaySummary=function(movements){
+  const positivSum=movements.filter(mov=>mov>0)
+  .reduce((acc, mov) => acc + mov, 0)
+  const negativSum=movements.filter(mov=>mov<0)
+  .reduce((acc, mov) => acc + mov, 0)
+  
+  labelSumIn.textContent=positivSum
+  labelSumOut.textContent=negativSum
+}
 
-getBalance(account1.movements)
+
+const createTotalSum=function(accounts){
+  accounts.forEach(account=>{
+    account.total=account.movements.reduce(function (acc, cur){return acc+cur})
+  })
+}
+
+const updateUI=function(acc){
+  displaySummary(acc.movements)
+  displayMoments(acc.movements)
+  getBalance(acc.movements)
+
+}
+
+let Currentacc
+
+btnLogin.addEventListener("click",function(e){
+  e.preventDefault()
+  Currentacc=accounts.find(acc=>acc.username===inputLoginUsername.value)
+  // if(Currentacc?.pin===Number(inputClosePin.value)){
+  //   console.log("YEA")} Noe klikk med inputen her 
+  if (!Currentacc){
+    return alert("Worng username and password")
+  }
+  updateUI(Currentacc)
+  return Currentacc
+  // console.log(acc)
+})
+
+
+
+
+btnTransfer.addEventListener("click", function (e){
+  e.preventDefault()
+  const amount=Number(inputTransferAmount.value) 
+  const transferTo=accounts.find(acc=>acc.username===inputTransferTo.value)
+
+  if (!transferTo) alert("No name found")
+
+
+  if (amount && Currentacc.total>=amount) {
+    transferTo.movements.push(amount)
+    Currentacc.movements.push(-amount)
+    createTotalSum(accounts)
+    updateUI(Currentacc)
+  }
+  // !amount && Currentacc.total>=amount && transferTo.movements.push(amount)
+  
+  // Currentacc.movements.push(-amount)
+  // createTotalSum(accounts)
+  
+})
+
+createUsernamesList(accounts)
+createTotalSum(accounts)
+
+// Currentacc=login() 
+// Transfer(Currentacc)
+
+
+
+
+
+
+
+// displaySummary(movements)
+// displayMoments(account1.movements)
+// getBalance(account1.movements)
+
+
+
+
+
+const login=function(){
+  btnLogin.addEventListener("click",function(e){
+    e.preventDefault()
+    const Currentacc=accounts.find(acc=>acc.username===inputLoginUsername.value)
+    // if(Currentacc?.pin===Number(inputClosePin.value)){
+    //   console.log("YEA")} Noe klikk med inputen her 
+    if (!Currentacc){
+      return alert("Worng username and password")
+    }
+    updateUI(Currentacc)
+    return Currentacc
+    // console.log(acc)
+  })
+
+}
+
+const Transfer=function(Currentacc){
+  btnTransfer.addEventListener("click", function (e){
+    e.preventDefault()
+    const amount=Number(inputTransferAmount.value) 
+    const transferTo=accounts.find(acc=>acc.username===inputTransferTo.value)
+
+    if (!transferTo) alert("No name found")
+
+
+    if (amount && Currentacc.total>=amount) {
+      transferTo.movements.push(amount)
+      Currentacc.movements.push(-amount)
+      createTotalSum(accounts)
+      updateUI(currentAccount)
+    }
+    // !amount && Currentacc.total>=amount && transferTo.movements.push(amount)
+    
+    // Currentacc.movements.push(-amount)
+    // createTotalSum(accounts)
+    
+  })
+  
+}
+
+
+
+
+
+
+
+
+
+
 
 // combinding all the filter 
 const eurToUsd=1.1
