@@ -1,6 +1,6 @@
 'use strict';
-
 // prettier-ignore
+
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const form = document.querySelector('.form');
@@ -11,6 +11,8 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+
+const obj={"coords":{"lat":59,"lon":10}}
 
 
 // let map,mapEvent
@@ -23,12 +25,23 @@ class App {
         this._getPosition()
         form.addEventListener("submit",this._newWorkout.bind(this))
         inputType.addEventListener("change",this._toggleElevationField)
+        this.workouts=[]
     }
 
     _getPosition() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this)
-            , function() {alert("Cant find position, set to standard location")}
+            , ()=>{this.map = L.map('map').setView([59, 11], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.map);
+        
+            L.marker([60, 11]).addTo(this.map)
+                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                .openPopup();
+            this.map.on("click",this._showForm.bind(this));
+            }
             )
         }
     }
@@ -37,7 +50,6 @@ class App {
         const {latitude:lat, longitude:lon} = position.coords
         // console.log(position.coords.latitude, position.coords.longitude)
         this.map = L.map('map').setView([lat, lon], 13);
-
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
@@ -45,7 +57,6 @@ class App {
         L.marker([lat, lon]).addTo(this.map)
             .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
             .openPopup();
-
 
         // handling clicks on map
         this.map.on("click",this._showForm.bind(this));
@@ -90,7 +101,6 @@ class App {
 
 
 const app=new App()
-app._getPosition()
 
 
 // mapEvent is created from mapE which is the event when we click on map, we use this in submit form
