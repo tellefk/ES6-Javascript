@@ -6,26 +6,37 @@ class Workout {
         this.distance = distance;
         this.duration = duration;
         this.type = type;
+        this.date=new Date()
+        this.id=Math.random().toString().replace("0.", "")
     }
 
-    getCadence(){
-        this.cadence=this.distance*1000/this.duration;
+   _setDescription(){
+    const months= ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'august',"September","Oktober","November","December"]
+    this.description= `${this.type[0].toUpperCase()} ${this.type[1].slice(1)} on 
+    ${ months[this.date.getMonth()]}`   
+
+
     }
 
 }
 
-class Running extends Workout{
+export class Running extends Workout{
     type= "running"
-    constructor(position,distance, duration){
+    constructor(position,distance, duration, cadence){
         super(position,distance, duration);
+        this.cadence=cadence;
+        this._setDescription()
+        
     }
 }
 
 
-class Cycling extends Workout{
-    constructor(position,distance,duration){
+export class Cycling extends Workout{
+    constructor(position,distance,duration,elevation){
         super(position,distance,duration);
-        this.type="Cycling"
+        this.elevation=elevation;
+        this.type="cycling"
+        this._setDescription()
     }
 }
 
