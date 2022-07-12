@@ -1,0 +1,20 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "application",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Tellef Kydland",
+  "license": "ISC",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+  "@parcel/transformer-sass": "^2.6.2",
+  "parcel": "^2.6.2",
+  "sas":"1.26.10"
+  }
+}
