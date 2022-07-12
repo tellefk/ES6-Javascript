@@ -1,59 +1,20 @@
 import icons from "url:../../img/icons.svg";  // path to icon folder with the dist folder 
-
+import View from "./View"
 //dont think we need to make all privat with the # 
-class RecipeView {
-    #parentEl= document.querySelector('.recipe') //make elements privat, cant see them and import them with inheritance
-    #data;
-    #errorMessage="We could find the recipe"
-    #message=""
-    render(data){
-        this.#data=data
-        const markup=this.#generateMarkup()
-        this.#clear
-        this.#parentEl.insertAdjacentHTML("afterbegin", markup)
-    }
-    #clear(){
-        this.#parentEl.innerHTML=""
-    }
-
+class recipeView extends View {
+    _parentEl= document.querySelector('.recipe') //make elements privat, cant see them and import them with inheritance
+    _data;
+    
     addHandlerRender(handler){
         window.addEventListener("hashchange", handler)
-        window.addEventListener("load", handler)
+        window.addEventListener("load", handler)   
     }
 
-    renderError(message=this.#errorMessage){
-        const markup=`
-        <div class="error">
-        <div>
-          <svg>
-            <use href="${icons}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`
-      this.#clear()
-      this.#parentEl.insertAdjacentHTML("afterbegin", markup)
-    }
-
-    renderMessage(message=this.#message){
-        const markup=`
-        <div class="message">
-        <div>
-          <svg>
-            <use href="${icons}#icon-smile"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`
-      this.#clear()
-      this.#parentEl.insertAdjacentHTML("afterbegin", markup)
-    }
-
-    #generateMarkup(){
+    _generateMarkup(){
         return `<figure class="recipe__fig">
-        <img sthis.#data.image} alt="Tomato" class="recipe__img" />
+        <img src=${this._data.image} alt="Tomato" class="recipe__img" />
         <h1 class="recipe__title">
-        <span>${this.#data.title}</span>
+        <span>${this._data.title}</span>
         </h1>
         </figure>
         
@@ -101,7 +62,7 @@ class RecipeView {
         <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
-        ${this.#data.ingredients.map(ing=>{
+        ${this._data.ingredients.map(ing=>{
             return `
             <li class="recipe__ingredient">
             <svg class="recipe__icon">
@@ -121,12 +82,12 @@ class RecipeView {
         <h2 class="heading--2">How to cook it</h2>
         <p class="recipe__directions-text">
         This recipe was carefully designed and tested by
-        <span class="recipe__publisher">${this.#data.publisher}</span>. Please check out
+        <span class="recipe__publisher">${this._data.publisher}</span>. Please check out
         directions at their website.
         </p>
         <a
         class="btn--small recipe__btn"
-        href=${this.#data.sourceUrl}
+        href=${this._data.sourceUrl}
         target="_blank"
         >
         <span>Directions</span>
@@ -137,23 +98,7 @@ class RecipeView {
         </div>`
         // this.parentEl.insertAdjacentHTML("afterbegin",markup)        
        
-    }
-
-
-    renderSpinner(){
-    const markup=`
-    <div class="spinner">
-            <svg>
-                <use href="${icons}#icon-loader"></use>
-            </svg>
-    </div> 
-    `
-    this.#parentEl.innerHTML = ""
-    this.#parentEl.insertAdjacentHTML("afterbegin",markup)
-    }
-      
-    
-        
+    }   
 }
 
-export default new RecipeView()
+export default new recipeView()
