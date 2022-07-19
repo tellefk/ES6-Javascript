@@ -3,7 +3,7 @@ import recipeView from "./views/recipeView";
 import searchView from "./views/searchView";
 import resultsViews from "./views/resultsViews";
 import paginationView from "./views/paginationView ";
-
+import addRecipeView  from "./views/addRecipeView ";
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 
@@ -18,6 +18,7 @@ const controllRecipes = async function () {
     const id=window.location.hash.slice(1); //finds the hash at the end of the url 
     if (!id) return
     recipeView.renderSpinner()
+    resultsViews.update(model.getSearchResultsPage())
     await model.loadRecipe(id)
     // const recipe=model.state.recipe is the same as the below
     const {recipe}=model.state
@@ -59,13 +60,39 @@ const controllPagination=async function(goToPage=model.state.search.page){
 
 
 
-//publisher subscriber method
+const controllServings=function(newServing){
+  try {
+    model.updateServings(newServing)
+    recipeView.update(model.state.recipe)
+  }catch(e){
+    recipeView.renderError()
+  }
+
+}
+
+
+
+const controllAddbookmark=function(){
+  if (!model.state.recipe.bookmarked) {
+    model.addBookmark(model.state.recipe)
+  }else if (model.state.recipe.bookmarked) {
+    model.deleteBookmark(model.state.recipe.id)}
+  recipeView.update(model.state.recipe)
+}
+
+//publisher subscriber method handles events from controller, events happend on the view
 const init=function(){
   recipeView.addHandlerRender(controllRecipes)
   searchView.addHandlerSearch(controllSearchResult)
   paginationView.addHandlerClick(controllPagination)
+  recipeView.addHandlerUpdate(controllServings)
+  recipeView.addHandlerAddBookmark(controllAddbookmark)
+  addRecipeView
 
 }
 
 init()
+
+
+
 
